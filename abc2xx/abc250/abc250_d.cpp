@@ -1,41 +1,32 @@
 #include <bits/stdc++.h>
 
 #include <atcoder/all>
-#define rep(i, n) for (int i = 0; i < n; i++)
+#define rep(i, n) for (ll i = 0; i < n; i++)
 using namespace std;
 using ll = long long;
 
 int main() {
-  int Q;
-  cin >> Q;
-
-  queue<pair<int, int>> que;
-  vector<ll> ans;
-  int t, x, c;
-
-  rep(i, Q) {
-    cin >> t;
-    if (t == 1) {
-      cin >> x >> c;
-      que.push(make_pair(x, c));
-    } else {
-      cin >> c;
-      ll calc = 0;
-      while (c > 0) {
-        pair<int, int> p = que.front();
-        if (p.second <= c) {
-          c -= p.second;
-          calc += (ll)p.first * p.second;
-          que.pop();
-        } else {
-          calc += (ll)p.first * c;
-          que.front().second -= c;
-          c = 0;
-        }
-      }
-      ans.push_back(calc);
-    }
+  const ll M = 1e6;
+  vector<bool> isPrime(M + 1, true);
+  vector<ll> primes;
+  isPrime[0] = isPrime[1] = false;
+  for (ll i = 2; i <= M; i++) {
+    if (!isPrime[i]) continue;
+    primes.push_back(i);
+    for (ll j = i * i; j <= M; j += i) isPrime[j] = false;
   }
-  for (ll x : ans) cout << x << endl;
+
+  vector<int> s(M + 1, 0);
+  for (ll x : primes) s[x] = 1;
+  rep(i, M) s[i + 1] += s[i];
+
+  ll N;
+  cin >> N;
+  ll ans = 0;
+  for (ll x : primes) {
+    ll r = min(N / (x * x * x), x - 1);
+    ans += s[r];
+  }
+  cout << ans << endl;
   return 0;
 }
