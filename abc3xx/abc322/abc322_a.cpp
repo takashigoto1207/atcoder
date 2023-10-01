@@ -7,15 +7,10 @@ using namespace atcoder;
 using ll = long long;
 
 int main() {
-  string N;
-  cin >> N;
+  int N;
+  string S;
+  cin >> N >> S;
 
-  rep(i, N.size() - 1) {
-    if (N[i] <= N[i + 1]) {
-      cout << "No" << endl;
-      return 0;
-    }
-  }
-  cout << "Yes" << endl;
+  cout << (S.find("ABC") == string::npos ? -1 : int(S.find("ABC")) + 1) << endl;
   return 0;
 }
