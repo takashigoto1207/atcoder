@@ -7,9 +7,14 @@ using namespace atcoder;
 using ll = long long;
 
 int main() {
-  int N;
-  cin >> N;
+  string S;
+  cin >> S;
 
-  cout << ((N == 12) ? 1 : N + 1) << endl;
+  rep(i, S.size()) {
+    if (i == 0)
+      cout << (char)toupper(S[i]);
+    else
+      cout << (char)tolower(S[i]);
+  }
   return 0;
 }
