@@ -7,7 +7,7 @@ using namespace atcoder;
 using ll = long long;
 
 int main() {
-    int N;
+  int N;
   cin >> N;
 
   cout << ((N % 3 == 0) ? "YES" : "NO") << endl;
