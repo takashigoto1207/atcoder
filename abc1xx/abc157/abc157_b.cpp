@@ -7,7 +7,7 @@ using namespace atcoder;
 using ll = long long;
 
 int main() {
-vector<vector<int>> A(3, vector<int>(3));
+  vector<vector<int>> A(3, vector<int>(3));
   rep(i, 3) rep(j, 3) cin >> A[i][j];
 
   int N;
