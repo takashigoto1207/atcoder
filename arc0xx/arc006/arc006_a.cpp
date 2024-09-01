@@ -7,8 +7,7 @@ using namespace atcoder;
 using ll = long long;
 
 int main() {
-map<int, int> E;
-  map<int, int> L;
+  map<int, int> E, L;
   int B, n;
   rep(i, 6) {
     cin >> n;
