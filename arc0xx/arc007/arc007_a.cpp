@@ -7,7 +7,7 @@ using namespace atcoder;
 using ll = long long;
 
 int main() {
-    char X;
+  char X;
   string s;
   cin >> X >> s;
 
