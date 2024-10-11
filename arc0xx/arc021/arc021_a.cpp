@@ -16,7 +16,7 @@ int main() {
         cout << "CONTINUE" << endl;
         return 0;
       }
-      if (j << 3 && A[i][j] == A[i][j + 1]) {
+      if (j < 3 && A[i][j] == A[i][j + 1]) {
         cout << "CONTINUE" << endl;
         return 0;
       }
