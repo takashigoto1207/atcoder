@@ -1,0 +1,25 @@
+#include <bits/stdc++.h>
+
+#include <atcoder/all>
+#define rep(i, n) for (int i = 0; i < n; i++)
+using namespace std;
+using namespace atcoder;
+using ll = long long;
+
+int main() {
+  int T;
+  cin >> T;
+
+  vector<ll> cs(T);
+  rep(i, T) cin >> cs[i];
+
+  rep(i, T) {
+    if (cs[i] % 2 != 0)
+      cout << "Odd" << endl;
+    else if (cs[i] % 4 != 0)
+      cout << "Same" << endl;
+    else
+      cout << "Even" << endl;
+  }
+  return 0;
+}
