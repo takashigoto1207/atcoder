@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+#
+# acnew  —  新しい AtCoder 問題のファイルを template.cpp から生成する
+#
+#   ./acnew abc473_a
+#   ./acnew arc205_c
+#   ./acnew agc001_a
+#   ./acnew abl_d
+#   ./acnew code_festival_2017_quala_a
+#   ./acnew https://atcoder.jp/contests/abc473/tasks/abc473_a
+#
+# 命名規則（フォルダ構成の自動判定）:
+#   abc / arc / agc  ->  <root>/<pfx><N/100>xx/<pfx><N>/<task>.cpp
+#   それ以外          ->  <root>/others/<contest>/<task>.cpp
+#                         （contest = タスク ID の最後の "_" より前）
+#
+# 既にファイルがあれば上書きせず、パスだけ表示して終了する。
+
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+TEMPLATE="$ROOT/template.cpp"
+
+arg="${1:-}"
+if [ -z "$arg" ]; then
+  echo "usage: acnew <task-id | atcoder-task-url>" >&2
+  echo "  例: acnew abc473_a" >&2
+  exit 1
+fi
+
+# URL が渡された場合は末尾のタスク ID を取り出す
+task="${arg##*/}"
+
+if [[ "$task" =~ ^(abc|arc|agc)([0-9]+)_(.+)$ ]]; then
+  pfx="${BASH_REMATCH[1]}"
+  num="${BASH_REMATCH[2]}"
+  hundreds=$(( 10#$num / 100 ))          # 10# で先頭ゼロを 10 進数として扱う
+  dir="$ROOT/${pfx}${hundreds}xx/${pfx}${num}"
+elif [[ "$task" =~ ^(.+)_([^_]+)$ ]]; then
+  contest="${BASH_REMATCH[1]}"
+  dir="$ROOT/others/$contest"
+else
+  echo "acnew: タスク ID を解釈できません: $task" >&2
+  exit 1
+fi
+
+dest="$dir/$task.cpp"
+
+if [ -e "$dest" ]; then
+  echo "既に存在します: ${dest#$ROOT/}"
+  exit 0
+fi
+
+if [ ! -f "$TEMPLATE" ]; then
+  echo "acnew: テンプレートが見つかりません: $TEMPLATE" >&2
+  exit 1
+fi
+
+mkdir -p "$dir"
+cp "$TEMPLATE" "$dest"
+echo "作成しました: ${dest#$ROOT/}"
+
+# エディタ CLI があれば開く（無ければ何もしない）
+if command -v code >/dev/null 2>&1; then
+  code "$dest"
+elif command -v cursor >/dev/null 2>&1; then
+  cursor "$dest"
+fi
